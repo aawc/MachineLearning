@@ -21,14 +21,14 @@ grad = zeros(n);
 % Note: grad should have the same dimensions as theta
 %
 
+theta_t_x = X * theta;
+h_theta_x = sigmoid(theta_t_x);
+
 for row=1:m,
-  xi = X(row, :);
-  theta_t_x = xi * theta;
-  h_theta_x(row) = sigmoid(theta_t_x);
-  expression = (-y(row) * log(h_theta_x(row))) - (
+  J += (-y(row) * log(h_theta_x(row))) - (
     (1 - y(row)) * log(1 - h_theta_x(row)));
-  J += expression;
 end
+J = J / m;
 
 for col=1:n,
   for row=1:m,
@@ -37,8 +37,6 @@ for col=1:n,
   end
   grad(col) /= m;
 end
-
-J = J / m;
 
 % =============================================================
 
