@@ -32,8 +32,7 @@ J = J / m;
 
 for col=1:n,
   for row=1:m,
-    expression = (h_theta_x(row) - y(row)) * X(row, col);
-    grad(col) += expression;
+    grad(col) += (h_theta_x(row) - y(row)) * X(row, col);
   end
   grad(col) /= m;
 end
