@@ -39,7 +39,15 @@ Z = [ones(m, 1) X];
 
 theta_t_x = Z * transpose(theta);
 h_theta_x = sigmoid(theta_t_x);
+
+% ==== J ====
 J = (1.0 / m) .* sum(-(y .* log(h_theta_x)) - ((1 .- y) .* log(1 - h_theta_x)))
+J += (lambda / (2 * m)) .* sum(theta .* theta)
+% ==== J ====
+
+% ==== grad ====
+grad(1) = (1.0 / m) .* sum((h_theta_x .- y) .* Z)
+% ==== grad ====
 
 % =============================================================
 
