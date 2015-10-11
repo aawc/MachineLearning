@@ -39,9 +39,12 @@ grad = zeros(size(theta));
 theta_t_x = X * theta;
 h_theta_x = sigmoid(theta_t_x);
 
+temp = theta;
+temp(1) = 0;
+
 % ==== J ====
 first_term = (log(h_theta_x)' * y + (log(1 - h_theta_x)' * (1 - y))) / -m;
-second_term = lambda * sumsq(theta) / (2 * m);
+second_term = lambda * sumsq(temp) / (2 * m);
 
 J = first_term + second_term;
 % ==== J ====
@@ -49,8 +52,6 @@ J = first_term + second_term;
 % ==== grad ====
 first_term = (X' * (h_theta_x - y)) / m;
 
-temp = theta;
-temp(1) = 0;
 second_term = lambda * temp / m;
 grad = first_term + second_term;
 % ==== grad ====
