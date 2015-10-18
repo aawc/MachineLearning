@@ -8,8 +8,8 @@ function [J grad] = nnCostFunction(nn_params, ...
 %   [J grad] = NNCOSTFUNCTON(nn_params, hidden_layer_size, num_labels, ...
 %   X, y, lambda) computes the cost and gradient of the neural network. The
 %   parameters for the neural network are "unrolled" into the vector
-%   nn_params and need to be converted back into the weight matrices. 
-% 
+%   nn_params and need to be converted back into the weight matrices.
+%
 %   The returned parameter grad should be a "unrolled" vector of the
 %   partial derivatives of the neural network.
 %
@@ -21,11 +21,15 @@ Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 
 Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
                  num_labels, (hidden_layer_size + 1));
+% size(Theta1) = hidden_layer_size * (input_layer_size + 1)
+% size(Theta2) = num_labels * (hidden_layer_size + 1)
+% size(X) = m * (input_layer_size + 1)
+% size(y) = num_labels
 
 % Setup some useful variables
 m = size(X, 1);
-         
-% You need to return the following variables correctly 
+
+% You need to return the following variables correctly
 J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
@@ -46,12 +50,12 @@ Theta2_grad = zeros(size(Theta2));
 %         that your implementation is correct by running checkNNGradients
 %
 %         Note: The vector y passed into the function is a vector of labels
-%               containing values from 1..K. You need to map this vector into a 
+%               containing values from 1..K. You need to map this vector into a
 %               binary vector of 1's and 0's to be used with the neural network
 %               cost function.
 %
 %         Hint: We recommend implementing backpropagation using a for-loop
-%               over the training examples if you are implementing it for the 
+%               over the training examples if you are implementing it for the
 %               first time.
 %
 % Part 3: Implement regularization with the cost function and gradients.
@@ -62,23 +66,34 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Part 1:
+% ======
 
+% h_theta_x:
+A1 = [ones(m, 1) X];
 
+Z2 = A1 * Theta1';
+A2 = sigmoid(Z2);
 
+A2 = [ones(m, 1) A2];
+Z3 = A2 * Theta2';
+A3 = sigmoid(Z3);
+h_theta_x = A3;
 
+% Y
+Y = [];
+for k = 1 : num_labels,
+  Y = [Y (y == k)];
+end
 
-
-
-
-
-
-
-
-
-
-
-
-
+% J
+for i = 1 : m,
+  for k = 1 : num_labels,
+    first_term = Y(i, k) * log(h_theta_x(i, k));
+    second_term = (1 - Y(i, k)) * log(1 - h_theta_x(i, k));
+    J -= (first_term + second_term) / m;
+  end
+end
 
 % -------------------------------------------------------------
 
