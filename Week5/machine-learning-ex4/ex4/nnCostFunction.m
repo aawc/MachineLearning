@@ -111,8 +111,11 @@ delta_2 = (delta_3 * Theta2(:, 2:end)) .* sigmoidGradient(Z2);
 triangle_1 = delta_2' * A1;
 triangle_2 = delta_3' * A2;
 
-Theta1_grad = triangle_1 / m;
-Theta2_grad = triangle_2 / m;
+Theta1_temp = [zeros(hidden_layer_size, 1) Theta1(:, 2:end)];
+Theta2_temp = [zeros(num_labels, 1) Theta2(:, 2:end)];
+
+Theta1_grad = (triangle_1 + lambda * Theta1_temp) / m;
+Theta2_grad = (triangle_2 + lambda * Theta2_temp) / m;
 
 % -------------------------------------------------------------
 
