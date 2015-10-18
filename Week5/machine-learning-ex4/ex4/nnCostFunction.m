@@ -66,8 +66,8 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-% Part 1:
-% ======
+% Part 1: Cost function
+% =====================
 
 % h_theta_x:
 A1 = [ones(m, 1) X];
@@ -95,8 +95,24 @@ for i = 1 : m,
   end
 end
 
+% Part 3: Regularization
+% ======================
+
 % Cost regularization
 J += lambda * (sum(sumsq(Theta1(:, 2:end))) + sum(sumsq(Theta2(:, 2:end)))) / (2*m);
+
+
+% Part 2: Backpropagation algorithm
+% =================================
+
+delta_3 = A3 - Y;
+delta_2 = (delta_3 * Theta2(:, 2:end)) .* sigmoidGradient(Z2);
+
+triangle_1 = delta_2' * A1;
+triangle_2 = delta_3' * A2;
+
+Theta1_grad = triangle_1 / m;
+Theta2_grad = triangle_2 / m;
 
 % -------------------------------------------------------------
 
