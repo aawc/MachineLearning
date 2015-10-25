@@ -23,9 +23,15 @@ h_theta_x = X * theta;
 theta_temp = theta;
 theta_temp(1) = 0;
 
-first_term = sum((h_theta_x - y) .^ 2) / (2*m)
-second_term = lambda*sumsq(theta_temp)/(2*m)
+% == J ==
+first_term = sum((h_theta_x - y) .^ 2) / (2*m);
+second_term = lambda*sumsq(theta_temp)/(2*m);
 J = first_term + second_term;
+
+% == grad ==
+first_term = sum((h_theta_x - y) .* X)' / m;
+second_term = lambda * theta_temp / m;
+grad = first_term + second_term;
 
 % =========================================================================
 
