@@ -24,7 +24,7 @@ sigma = 0.3;
 %
 
 values = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
-lowest_error = Inf
+lowest_error = Inf;
 
 for C_idx = 1:size(values),
   C = values(C_idx);
