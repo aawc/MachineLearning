@@ -24,6 +24,7 @@ sigma = 0.3;
 %
 
 values = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
+values = [0.01; 0.03; 0.1; 0.3; 1; 3];  % To make the submit run faster.
 lowest_error = Inf;
 
 for C_idx = 1:size(values),
@@ -38,6 +39,7 @@ for C_idx = 1:size(values),
       best_C = C;
       best_sigma = sigma;
     end
+  end
 end
 
 C = best_C;
